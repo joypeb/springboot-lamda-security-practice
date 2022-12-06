@@ -1,5 +1,6 @@
 package com.java.lamda.configuration;
 
+import com.java.lamda.domain.User;
 import com.java.lamda.service.UserService;
 import com.java.lamda.utils.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
@@ -56,9 +57,14 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             return;
         }
 
+        String userName = JwtTokenUtils.getUserNAme(token,secretKey);
+
+        User user = userService.getUserByUserName(userName);
+        log.info("user : " + user.getUserName());
+
 
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken("",null, List.of(new SimpleGrantedAuthority("USER")));
+                new UsernamePasswordAuthenticationToken(userName,null, List.of(new SimpleGrantedAuthority(user.getUserRole()+"")));
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         filterChain.doFilter(request,response);

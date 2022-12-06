@@ -1,6 +1,7 @@
 package com.java.lamda.service;
 
 import com.java.lamda.domain.User;
+import com.java.lamda.domain.UserRole;
 import com.java.lamda.exception.AppException;
 import com.java.lamda.exception.ErrorCode;
 import com.java.lamda.repository.UserRepository;
@@ -34,6 +35,7 @@ public class UserService {
         User user = User.builder()
                 .userName(userName)
                 .password(encoder.encode(password))
+                .userRole(UserRole.USER)
                 .build();
         userRepository.save(user);
 
@@ -53,5 +55,10 @@ public class UserService {
 
         //로그인 토큰 발행
         return JwtTokenUtils.createToken(userName,secretKey,expireTimems);
+    }
+
+    public User getUserByUserName(String userName) {
+        return userRepository.findByUserName(userName).orElseThrow(
+                () -> new AppException(ErrorCode.USERNAME_NOT_FOUND, ""));
     }
 }
