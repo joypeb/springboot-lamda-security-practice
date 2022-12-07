@@ -1,5 +1,9 @@
 # 람다 연습과 스프링 시큐리티 연습
 
+
+## ERD
+![](src/main/resources/erd/hospitalERD.png)
+
 ## EndPoint
 
 - join

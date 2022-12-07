@@ -48,7 +48,7 @@ class UserControllerTest {
         mockMvc.perform(post("/api/v1/users/join")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsBytes(new UserJoinRequest(userName, password))))
+                        .content(objectMapper.writeValueAsBytes(new UserJoinRequest())))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -65,7 +65,7 @@ class UserControllerTest {
         mockMvc.perform(post("/api/v1/users/join")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsBytes(new UserJoinRequest(userName, password))))
+                        .content(objectMapper.writeValueAsBytes(new UserJoinRequest())))
                 .andDo(print())
                 .andExpect(status().isConflict());
     }
